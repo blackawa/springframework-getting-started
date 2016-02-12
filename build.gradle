@@ -24,6 +24,10 @@ project.ext {
     tomcatVersion = '8.0.27'
 }
 
+def defaultEncoding = 'UTF-8'
+tasks.withType(AbstractCompile).each { it.options.encoding = defaultEncoding }
+tasks.withType(GroovyCompile).each { it.groovyOptions.encoding = defaultEncoding }
+
 dependencies {
     // The production code uses the SLF4J logging API at compile time
     compile 'org.slf4j:slf4j-api:1.7.14'
@@ -33,6 +37,13 @@ dependencies {
     compile 'javax.servlet.jsp.jstl:jstl:1.2'
     // spring
     compile "org.springframework:spring-webmvc:${springVersion}"
+    compile "org.springframework:spring-jdbc:${springVersion}"
+
+    // database
+    compile 'com.h2database:h2:1.4.191'
+
+    // others
+    compile 'org.projectlombok:lombok:1.16.6'
 
     // embed tomcat
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
