@@ -14,6 +14,22 @@
     <context:component-scan base-package="jp.blackawa.example.springmvc" />
     <context:annotation-config />
 
+    <!-- Important!! -->
+    <!-- Default Servlet Handler (For Resources *.css, *.js, image,..) -->
+    <mvc:default-servlet-handler />
+    <mvc:annotation-driven />
+
+    <!-- Config resource mapping -->
+    <!-- こうすればWEB-INF配下の普段ユーザから隠れているディレクトリもURLマッピングの対象になる -->
+    <mvc:resources mapping="/styles/**" location="/WEB-INF/resources/css/" />
+
+    <!-- Config Properties file -->
+    <bean id="appProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list><value>classpath:ApplicationRB.properties</value></list>
+        </property>
+    </bean>
+
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/pages/"
           p:suffix=".jsp"/>
