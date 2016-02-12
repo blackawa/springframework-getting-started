@@ -1,24 +1,41 @@
-apply plugin: 'java'
-apply plugin: 'war'
-
 repositories {
     jcenter()
 }
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.4'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'com.bmuschko.tomcat'
 
 group = 'jp.blackawa.example'
 version = '0.1.0-SNAPSHOT'
 project.ext {
     artifactId = 'spring-mvc-getting-started'
     springVersion = '4.2.4.RELEASE'
+    tomcatVersion = '8.0.27'
 }
 
 dependencies {
     // The production code uses the SLF4J logging API at compile time
     compile 'org.slf4j:slf4j-api:1.7.14'
 
+    // servlet
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
     // spring
-    compile "org.springframework:spring-core:${springVersion}"
-    compile "org.springframework:spring-context:${springVersion}"
+    compile "org.springframework:spring-webmvc:${springVersion}"
+
+    // embed tomcat
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 
     testCompile 'junit:junit:4.12'
 }
